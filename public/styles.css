@@ -1,0 +1,76 @@
+:root {
+    --primary: #B71C1C;
+}
+
+#map {
+    height: 800px;
+}
+
+.new-marker{
+    border-radius:100%;
+    width:20px !important;
+    height: 20px !important;
+    background-color: green;
+    font-size: 10px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    border: 2px solid #FFF;
+    transition: 0.5s;
+}
+
+.typeOfLocation{
+    background:#f0f0f0;
+    
+    box-shadow: 0 0 5px 1px #ddd;
+    color: #000;
+    border: 1px solid #B71C1C;
+    width:30px;
+    height:30px;
+    font-size:16px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius:5px;
+    cursor:pointer;
+    transition: 0.5s;
+}
+.typeOfLocation:hover{
+    opacity: 1;
+    color: #B71C1C;
+}
+
+.typeOfLocation.selected{
+    background-color: #B71C1C;
+    color: #FFF;
+}
+
+.hidden{
+    display: none;
+}
+
+.form-check-input{
+    transition: 0.5s;
+}
+
+.location{
+
+    width:fit-content;
+    padding: 0 5px;
+}
+
+
+
+.removeLocation{
+    transition: 0.5s;
+    padding: 5px 2.5px;
+    cursor:pointer;
+}
+.removeLocation:hover{
+    color: #B71C1C;
+}
+.selected-marker{
+    box-shadow: 0 0 5px 0.1px #B71C1C;
+    border: 2px solid #B71C1C;
+}
