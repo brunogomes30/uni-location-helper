@@ -13,8 +13,11 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 
-        <script src="script.js"
-            ></script>
+        <script src="script.js"></script>
+        <script src="utils.js"></script>
+        <script src="locations.js"></script>
+        <script src="view.js"></script>
+        <script src="json.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
         
 
@@ -22,6 +25,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
+        <div id="growls">
+        
+        </div>
         <div    class="w-100" 
                 style="height: 40px;">
 
@@ -197,7 +203,10 @@
         </div>
   
     <!-- Modal -->
-    <div class="modal fade" id="addLocationDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade"
+         onkeydown="enterKeyDialog(event);"
+         id="addLocationDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        >
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -250,6 +259,11 @@
                         class="btn btn-primary"
                         onclick="importFromJSON();"
                         data-bs-dismiss="modal">Import</button>
+                <button type="button"
+                        id="copyJSON"
+                        class="btn btn-primary"
+                        onclick="copyJSON();"
+                        data-bs-dismiss="modal">Copy to clipboard</button>
         </div>
         </div>
     </div>

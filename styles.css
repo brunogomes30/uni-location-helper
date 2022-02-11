@@ -1,5 +1,7 @@
 :root {
     --primary: #B71C1C;
+    --light-color: #FFF;
+    --dark-color: #B71C1C;
 }
 
 #map {
@@ -50,6 +52,7 @@
     display: none;
 }
 
+
 .form-check-input{
     transition: 0.5s;
 }
@@ -73,4 +76,41 @@
 .selected-marker{
     box-shadow: 0 0 5px 0.1px #B71C1C;
     border: 2px solid #B71C1C;
+}
+
+
+#growls{
+    position: absolute;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    top: 60px;
+    right: calc(10% + 10px);
+}
+
+.growl{
+    position: relative;
+    min-width: 200px;
+    min-height: 50px;
+    border-radius: 5px;
+    opacity: 0.8;
+    background: var(--dark-color); 
+    padding: 10px 15px;
+    transition: 1s;
+    border: #000 solid 2px;
+    font-size: 18px;
+    z-index: 2;
+}
+
+.invisible{
+    opacity:0;
+}
+
+.growl-info{
+    color: var(--light-color);
+}
+
+.growl-error{
+    color: red;
+    font-weight: bold;
 }
