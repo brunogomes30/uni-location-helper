@@ -1,48 +1,89 @@
+class LocationType{
+    constructor(type, icon){
+        this.inputs = initInputs();
+        this.type = type;
+        this.icon = icon;
+        switch(type){
+            case 'COFFEE_MACHINE':
+                this.content = 'Coffee Machine';
+                break;
+            case 'VENDING_MACHINE':
+                this.content = 'Vending Machine';
+                break;
+            case 'ROOM':
+                this.content = ':room';
+                this.inputs['room'] = true;
+                this.title = 'Add room to floor ';
+                break;
+            case 'SPECIAL_ROOM':
+                this.content = ':room - :name';
+                this.inputs['room'] = true;
+                this.inputs['name'] = true;
+                this.title = 'Add special room to floor ';
+                break;
+            case 'ROOMS':
+                this.content = ':firstRoom -> :lastRoom';
+                this.inputs['firstRoom'] = true;
+                this.inputs['lastRoom'] = true;
+                this.title = 'Add special room to floor';
+                break;
+            case 'ATM':
+                this.content = 'ATM'
+                break;
+            case 'PRINTER':
+                this.content = 'Printer';
+                break;
+            case 'RESTAURANT':
+                this.content = 'Restaurant - :name'
+                this.inputs['name'] = true;
+                this.title = 'Add restaurant to floor ';
+                break;
+            case 'STORE':
+                this.content = 'Store - :name';
+                this.inputs['name'] = true;
+                this.title = 'Add store to floor ';
+                break;
+        }
+
+    }
+
+}
+
+let availableTypes = {
+    'COFFEE_MACHINE' : new LocationType('COFFEE_MACHINE', 'coffee'),
+    'VENDING_MACHINE' : new LocationType('VENDING_MACHINE', 'cube'),
+    'ROOM' : new LocationType('ROOM', 'book'),
+    'SPECIAL_ROOM' : new LocationType('SPECIAL_ROOM', 'star'),
+    'ROOMS' : new LocationType('ROOMS', 'users'),
+    'ATM' : new LocationType('ATM', 'dollar-sign'),
+    'PRINTER' : new LocationType('PRINTER', 'print'),
+    'RESTAURANT' : new LocationType('RESTAURANT', 'utensils'),
+    'STORE' : new LocationType('STORE', 'register')
+};
+/**
+ * 
+ */
 class Location{
     constructor(type, params){
         this.id = locationId++;
-        this.type = type;
-        let inputs = getInputs(type);
+        this.type = availableTypes[type];
+        let inputs = this.type.inputs;
         initVariables(inputs, this, params);
     }
     toHtml(){
-        let content = 'undefined';
-        switch(this.type){
-            case 'COFFEE_MACHINE':
-                content = 'Coffee Machine'
-                break;
-            case 'VENDING_MACHINE':
-                content = 'Vending machine'
-                break;
-            case 'ROOM':
-                content = 'Room ' + this.room;
-                break;
-            case 'SPECIAL_ROOM':
-                content = this.room + " - " + this.name;
-                break;
-            case 'ROOMS':
-                content = this.firstRoom + ' -> ' + this.lastRoom;
-                break;
-            case 'ATM':
-                content = 'ATM';
-                break;
-            case 'PRINTER':
-                content = 'Printer';
-                break;
-            case 'RESTAURANT':
-                content = 'Restaurant - ' + this.name
-                break;
-            case 'STORE':
-                content = 'Store - ' + this.name;
-                break;
+        let content = '' + this.type.content;
+        for(const [key, hasParam] of Object.entries(this.type.inputs)){
+            if(hasParam){
+                content = content.replace(':'+key, this[key]);
+            }
         }
         let html = `<div id='location${this.id}' class="location">${content} <i  onclick="removeLocation(${this.id})" class="fa fa-trash removeLocation"></i></div>`;
         return html;
     }
 
     toJSON(){
-        let json = {"type": this.type, 'args' : {}};
-        initVariables(getInputs(this.type), json['args'], this);
+        let json = {"type": this.type.type, 'args' : {}};
+        initVariables(this.type.inputs, json['args'], this);
         return json;
     }
 }
@@ -63,9 +104,7 @@ class LocationGroup{
             this.locations[floor] = [];
             floorLocations = this.locations[floor];
         }
-
         floorLocations.push(new Location(type, args));
-        updateGroupContent();
     }
 
     removeLocation(id){
@@ -115,66 +154,16 @@ function initInputs(){
         'lastRoom' : false
     };
 }
-
-function getInputs(type){
-    let inputs = initInputs();
-    switch(type){
-        case 'COFFEE_MACHINE':
-            break;
-        case 'VENDING_MACHINE':
-            break;
-        case 'ROOM':
-            inputs['room'] = true;
-            break;
-        case 'SPECIAL_ROOM':
-            inputs['room'] = true;
-            inputs['name'] = true;
-            break;
-        case 'ROOMS':
-            inputs['firstRoom'] = true;
-            inputs['lastRoom'] = true;
-            break;
-        case 'ATM':
-            break;
-        case 'PRINTER':
-            break;
-        case 'RESTAURANT':
-            inputs['name'] = true;
-            break;
-        case 'STORE':
-            inputs['name'] = true;
-            break;
-    }
-
-    return inputs;
-}
-
-
+/**
+ * If key is true in inputs, add to location[key] the params[key]; location[key] = params[key]
+ * @param {*} inputs 
+ * @param {*} location 
+ * @param {*} params 
+ */
 function initVariables(inputs, location, params = undefined){
     for(const [t, hasInput] of Object.entries(inputs)){
         if(hasInput){
             location[t] = params[t];
         }
     }
-}
-
-
-function getTitle(type, floor){
-    switch(type){
-        case 'ROOM':
-            title = 'Add Room to floor ' + floor;
-            break;
-        case 'ROOMS':
-            title = 'Add Rooms to floor ' + floor;
-            break;
-        case 'SPECIAL_ROOM':
-            title = 'Add Special Room to floor ' + floor;
-            break;
-        case 'RESTAURANT':
-            title = 'Add Restaurant to floor ' + floor;
-            break;
-        case 'STORE':
-            title = 'Add Store to floor ' + floor;
-    }
-    return title;
 }

@@ -113,59 +113,9 @@
                                 </label>
                             </div>
                             <h5><label class="w-100">Add locations:</label></h5>
-                            <div class="w-100 d-flex gap-2">
-                                <i  class='fa fa-coffee typeOfLocation'
-                                    title='Coffee machine'
-                                    type='COFFEE_MACHINE'></i>
-
-                                <i  class='fa fa-cube typeOfLocation'
-                                    title='Vending machine'
-                                    type='VENDING_MACHINE'></i>
-
-                                <i  class='fa fa-book typeOfLocation'
-                                    title='Room'
-                                    type='ROOM'></i>
-
-                                <i  class='fa fa-star typeOfLocation'
-                                    title='Special room'
-                                    type='SPECIAL_ROOM'></i>
-
-                                <i  class='fa fa-users typeOfLocation'
-                                    title='Rooms'
-                                    type='ROOMS'></i>
-
-                                <i  class='fa fa-dollar-sign typeOfLocation'
-                                    title='ATM'
-                                    type='ATM'></i>
-
-                                <i  class='fa fa-print typeOfLocation'
-                                    title='Printer'
-                                    type='PRINTER'></i>
-
-                                <i  class='fa fa-utensils typeOfLocation'
-                                    title='Restaurant'
-                                    type='RESTAURANT'></i>
-
-                                <i  class='fa fa-cash-register typeOfLocation'
-                                    title='Store'
-                                    type='STORE'></i>
+                            <div id="locationTypes" class="w-100 d-flex gap-2">
                                 <script>
-                                let icons = document.querySelectorAll(".typeOfLocation");
-                                icons.forEach((icon) => {
-                                    icon.addEventListener('click', function(event){
-                                        let iElem = event.path[0];
-                                        console.log("here");
-
-                                        if(!isSelected(iElem)){
-                                            //selectElem(iElem);
-                                            prepareAddLocation(iElem.getAttribute('type'));
-                                            //addLocation(getFloorSelected(),iElem.getAttribute('type'));
-                                        } else {
-                                            //removeSelection(iElem);
-                                            //removeLocation(getFloorSelected(), iElem.getAttribute('type'));
-                                        }
-                                    });
-                                });
+                                    addLocationIcons(availableTypes);
                                 </script>
                             </div>
                             

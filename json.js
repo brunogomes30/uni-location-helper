@@ -1,3 +1,7 @@
+/**
+ * Gets a JSON string from the current locations
+ * @returns 
+ */
 function getJSON(){
     arr = [];
     locationGroups.forEach((group) => {
@@ -6,6 +10,9 @@ function getJSON(){
     return JSON.stringify({"data": arr});
 }
 
+/**
+ * Converts the current locations to json to the textarea #jsonValue
+ */
 function convertToJSON(){
     let a = document.getElementById("jsonValue");
     a.value = getJSON();
@@ -13,6 +20,9 @@ function convertToJSON(){
     addClass(document.getElementById('jsonImportButton'), 'hidden');
 }
 
+/**
+ * Opens the dialog to import JSON
+ */
 function prepareImportFromJSON(){
     let a = document.getElementById("jsonValue");
     a.value = '';
@@ -20,6 +30,10 @@ function prepareImportFromJSON(){
     removeClass(document.getElementById('jsonImportButton'), 'hidden');
 }
 
+/**
+ * 
+ * @returns Gets the text from #jsonValue and uses it as a JSON to create the locations
+ */
 function importFromJSON(){
     let a = document.getElementById("jsonValue");
     if(a.value === '') return;
@@ -44,6 +58,9 @@ function importFromJSON(){
     
 }
 
+/**
+ * Copies to the clipboard the text in the textarea #jsonValue
+ */
 function copyJSON(){
     let text = document.getElementById('jsonValue');
     text.select();
