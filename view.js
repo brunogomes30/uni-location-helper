@@ -45,6 +45,7 @@ function addLocationIcons(types){
 function buildFloorHtml(floor, locations){
     let contentHTML = '';
     locations.forEach((location) => {
+        console.log(location);
         contentHTML += location.toHtml();
     })
     let html = `

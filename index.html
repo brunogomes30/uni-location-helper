@@ -18,7 +18,9 @@
         <script src="locations.js"></script>
         <script src="view.js"></script>
         <script src="json.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+        <script src="usability.js"></script>
+        <script src="actions.js"></script>
+        <script src="https://kit.fontawesome.com/2da6b1a3cb.js" crossorigin="anonymous"></script>
         
 
         <link rel="stylesheet" href="./styles.css"/>
@@ -113,7 +115,7 @@
                                 </label>
                             </div>
                             <h5><label class="w-100">Add locations:</label></h5>
-                            <div id="locationTypes" class="w-100 d-flex gap-2">
+                            <div id="locationTypes" class="w-100 d-flex gap-2 flex-wrap">
                                 <script>
                                     addLocationIcons(availableTypes);
                                 </script>
@@ -179,6 +181,10 @@
                 <div id="roomInputDiv" class="w-100 mb-3">
                     <label>Room</label>
                     <input id="roomInput" type='text'>
+                </div>
+                <div id="wctypeInputDiv" class="w-100 mb-3">
+                    <label>Type</label>
+                    
                 </div>
             </div>
             <div class="modal-footer">

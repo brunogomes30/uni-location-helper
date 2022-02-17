@@ -27,3 +27,13 @@ function addGrowlMessage(message, type){
     setTimeout(() => {document.getElementById("growl"+id).classList.add("invisible");}, 3000);
     setTimeout(() => {document.getElementById("growl"+id).remove();}, 4000);
   }
+
+function findMarker(id){
+    let marker = null;
+    map.eachLayer(function (layer) {
+        if(layer.options['title'] === (id + '')) {
+            marker = layer;
+        }
+    });
+    return marker;
+}

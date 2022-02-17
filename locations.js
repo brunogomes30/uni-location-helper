@@ -43,6 +43,10 @@ class LocationType{
                 this.inputs['name'] = true;
                 this.title = 'Add store to floor ';
                 break;
+            case 'WC':
+                this.content = 'Restroom - :type';
+                this.inputs['wctype'] = true;
+                this.title = 'Add restroom to floor ';
         }
 
     }
@@ -58,14 +62,15 @@ let availableTypes = {
     'ATM' : new LocationType('ATM', 'dollar-sign'),
     'PRINTER' : new LocationType('PRINTER', 'print'),
     'RESTAURANT' : new LocationType('RESTAURANT', 'utensils'),
-    'STORE' : new LocationType('STORE', 'register')
+    'STORE' : new LocationType('STORE', 'store'),
+    'WC' : new LocationType('WC', 'restroom')
 };
 /**
  * 
  */
 class Location{
-    constructor(type, params){
-        this.id = locationId++;
+    constructor(id, type, params){
+        this.id = id;
         this.type = availableTypes[type];
         let inputs = this.type.inputs;
         initVariables(inputs, this, params);
@@ -98,13 +103,13 @@ class LocationGroup{
         this.isFloorless = false;
     }
 
-    addLocation(floor, type, args)  {
+    addLocation(floor, location)  {
         let floorLocations = this.locations[floor];
         if(floorLocations == undefined){
             this.locations[floor] = [];
             floorLocations = this.locations[floor];
         }
-        floorLocations.push(new Location(type, args));
+        floorLocations.push(location);
     }
 
     removeLocation(id){
@@ -151,7 +156,8 @@ function initInputs(){
         'name' : false,
         'room' : false,
         'firstRoom' : false,
-        'lastRoom' : false
+        'lastRoom' : false,
+        'wctype' : false
     };
 }
 /**

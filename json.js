@@ -50,7 +50,8 @@ function importFromJSON(){
         let locations = row.locations;
         for(const [floor, list] of Object.entries(locations)){
             list.forEach((location) => {
-                group.addLocation(floor, location.type, location.args);
+                
+                group.addLocation(floor, new Location(null, location.type, location.args));
             });
         }
     })

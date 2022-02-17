@@ -41,31 +41,14 @@ function getFloorSelected(){
     }
 }
 
-/**
- * Adds and initializes a marker to the map. Also selects it in the end
- * @param {*} latlng 
- * @param {*} id 
- * @returns 
- */
-function addMarker(latlng, id){
-    let marker = new L.marker(latlng, {icon : addedIcons, title: id + '', draggable: true}).addTo(map);
-    document.querySelector('.new-marker[title="'+id+'"]').innerHTML = id;
-    let group = new LocationGroup(id, marker, latlng);
-    locationGroups.push(group);
-    
-    marker.on('click', function(e){
-        selectMarker(group.id);
-    });
-    marker.on("drag", function(e) {
-        var marker = e.target;
-        var position = marker.getLatLng();
-        let latlng = new L.LatLng(position.lat, position.lng);
-        locationGroups[group.id].latlng = latlng;
 
-    });
-    selectMarker(group.id);
+
+function addMarker(latlng, id){
+    group = new LocationGroup(id, null, latlng);
+    doAction(new AddLocationGroupAction(group, locationGroups));
     return group;
 }
+
 
 /**
  * Removes previous selected marker and selects the marker with the id, updates the right view and display it's locations(if any)
@@ -77,6 +60,7 @@ function selectMarker(id){
         removeClass(previous, 'selected-marker');
     }
     let selectedMarker = document.querySelector('.new-marker[title="'+id+'"]');
+
     selectedMarker.classList.add("selected-marker");
     selectedLocation = locationGroups[id];
     updateGroupContent();
@@ -87,7 +71,7 @@ function selectMarker(id){
  * Removes the currently selected marker from the map
  */
 function removeSelectedMarker(){
-    removeMarker(selectedLocation.id);
+    doAction(new RemoveLocationGroupAction(selectedLocation));
     selectedLocation = null;
     switchRightView();
 }
@@ -97,9 +81,7 @@ function removeSelectedMarker(){
  * @param {*} id 
  */
 function removeMarker(id){
-    let selectedMarker = document.querySelector('.new-marker[title="'+id+'"]');
-    selectedMarker.remove();
-    delete locationGroups[id];
+    
 }
 
 /**
@@ -121,8 +103,9 @@ function prepareAddLocation(type){
     if(Object.values(inputs).includes(true)){
         openLocationDialog(type);
     } else {
-        selectedLocation.addLocation(getFloorSelected(),type, null);
-        updateGroupContent();
+        let location = new Location(locationId++, type, null);
+        doAction(new AddLocationAction(location, selectedLocation));
+        //selectedLocation.addLocation(getFloorSelected(),type, null);
     }
 }
 
@@ -163,10 +146,10 @@ function openLocationDialog(type){
  */
 function addLocation(){
     let type = document.type;
-    
     let inputs = availableTypes[type].inputs;
-    
     let args = {};
+
+    //Get inputs
     if(Object.values(inputs).includes(true)){
         for(const [key, hasInput] of Object.entries(inputs)){
             if(!hasInput) continue;
@@ -178,8 +161,9 @@ function addLocation(){
             args[key] = value;
         }
     }
-    selectedLocation.addLocation(getFloorSelected(), type, args);
-    updateGroupContent();
+
+    let location = new Location(locationId++, type, args);
+    doAction(new AddLocationAction(location, selectedLocation));
     $('#addLocationDialog').modal('hide');
 }
 
