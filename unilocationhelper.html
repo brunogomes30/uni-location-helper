@@ -13,23 +13,15 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 
-        <script src="script.js"></script>
-        <script src="utils.js"></script>
-        <script src="locations.js"></script>
-        <script src="view.js"></script>
-        <script src="json.js"></script>
-        <script src="usability.js"></script>
-        <script src="actions.js"></script>
-        <script src="https://kit.fontawesome.com/2da6b1a3cb.js" crossorigin="anonymous"></script>
+        <script src="script.js"
+            ></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
         
 
         <link rel="stylesheet" href="./styles.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <div id="growls">
-        
-        </div>
         <div    class="w-100" 
                 style="height: 40px;">
 
@@ -46,7 +38,6 @@
                         let locationGroups = [];
                         let map = L.map('map', {
                             minZoom : 17,
-                            maxZoom: 18,
                             maxBounds :[[41.17590, -8.60018], [41.18005, -8.59208]]
                         }).setView([41.17749, -8.59558], 18);
             
@@ -116,9 +107,59 @@
                                 </label>
                             </div>
                             <h5><label class="w-100">Add locations:</label></h5>
-                            <div id="locationTypes" class="w-100 d-flex gap-2 flex-wrap">
+                            <div class="w-100 d-flex gap-2">
+                                <i  class='fa fa-coffee typeOfLocation'
+                                    title='Coffee machine'
+                                    type='COFFEE_MACHINE'></i>
+
+                                <i  class='fa fa-cube typeOfLocation'
+                                    title='Vending machine'
+                                    type='VENDING_MACHINE'></i>
+
+                                <i  class='fa fa-book typeOfLocation'
+                                    title='Room'
+                                    type='ROOM'></i>
+
+                                <i  class='fa fa-star typeOfLocation'
+                                    title='Special room'
+                                    type='SPECIAL_ROOM'></i>
+
+                                <i  class='fa fa-users typeOfLocation'
+                                    title='Rooms'
+                                    type='ROOMS'></i>
+
+                                <i  class='fa fa-dollar-sign typeOfLocation'
+                                    title='ATM'
+                                    type='ATM'></i>
+
+                                <i  class='fa fa-print typeOfLocation'
+                                    title='Printer'
+                                    type='PRINTER'></i>
+
+                                <i  class='fa fa-utensils typeOfLocation'
+                                    title='Restaurant'
+                                    type='RESTAURANT'></i>
+
+                                <i  class='fa fa-cash-register typeOfLocation'
+                                    title='Store'
+                                    type='STORE'></i>
                                 <script>
-                                    addLocationIcons(availableTypes);
+                                let icons = document.querySelectorAll(".typeOfLocation");
+                                icons.forEach((icon) => {
+                                    icon.addEventListener('click', function(event){
+                                        let iElem = event.path[0];
+                                        console.log("here");
+
+                                        if(!isSelected(iElem)){
+                                            //selectElem(iElem);
+                                            prepareAddLocation(iElem.getAttribute('type'));
+                                            //addLocation(getFloorSelected(),iElem.getAttribute('type'));
+                                        } else {
+                                            //removeSelection(iElem);
+                                            //removeLocation(getFloorSelected(), iElem.getAttribute('type'));
+                                        }
+                                    });
+                                });
                                 </script>
                             </div>
                             
@@ -156,10 +197,7 @@
         </div>
   
     <!-- Modal -->
-    <div class="modal fade"
-         onkeydown="enterKeyDialog(event);"
-         id="addLocationDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        >
+    <div class="modal fade" id="addLocationDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -182,10 +220,6 @@
                 <div id="roomInputDiv" class="w-100 mb-3">
                     <label>Room</label>
                     <input id="roomInput" type='text'>
-                </div>
-                <div id="wctypeInputDiv" class="w-100 mb-3">
-                    <label>Type</label>
-                    
                 </div>
             </div>
             <div class="modal-footer">
@@ -216,11 +250,6 @@
                         class="btn btn-primary"
                         onclick="importFromJSON();"
                         data-bs-dismiss="modal">Import</button>
-                <button type="button"
-                        id="copyJSON"
-                        class="btn btn-primary"
-                        onclick="copyJSON();"
-                        data-bs-dismiss="modal">Copy to clipboard</button>
         </div>
         </div>
     </div>
