@@ -44,9 +44,10 @@ class LocationType{
                 this.title = 'Add store to floor ';
                 break;
             case 'WC':
-                this.content = 'Restroom - :type';
-                this.inputs['wctype'] = true;
-                this.title = 'Add restroom to floor ';
+                this.content = 'Restroom ';
+                //this.inputs['wctype'] = false;
+                //this.title = 'Add restroom to floor ';
+                console.log("here");
         }
 
     }
